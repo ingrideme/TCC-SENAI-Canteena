@@ -57,6 +57,8 @@ export default function ProdutoCadastrar() {
   const [preco, setPreco ] = useState('');
   const [qtd, setQtd ] = useState('');
   const [descricao, setDescricao ] = useState('');
+  const [tipo, setTipo ] = useState('');
+  const [imagemtxt, setImagemtxt ] = useState('');
 
 
   async function handleSubmit(){
@@ -65,10 +67,12 @@ export default function ProdutoCadastrar() {
       nome_produto: nome,
       preco_produto: preco,
       qtd_produto: qtd, 
-      descricao_produto: descricao
+      descricao_produto: descricao,
+      tipo_produto: tipo,
+      imagem_txt: imagemtxt
     }
 
-    if(nome!==''&&preco!==''&&qtd!==''&&descricao!==''){
+    if(nome!==''&&preco!==''&&qtd!==''&&descricao!==''&&tipo!==''&&imagemtxt!==''){
       const response = await api.post('/api/produtos', data);
 
       if(response.status===200){
@@ -140,7 +144,34 @@ export default function ProdutoCadastrar() {
             onChange={e => setDescricao(e.target.value)}
           />
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid xs={12} sm={3}>
+        <FormControl className={classes.formControl}>
+                    <InputLabel id="labelTipo">Tipo</InputLabel>
+                    <Select
+                      labelId="labelTipo"
+                      id="tipo"
+                      value={tipo}
+                      onChange={e => setTipo(e.target.value)}             
+                       >
+                      <MenuItem value={1}>Bebidas</MenuItem>
+                      <MenuItem value={2}>Doces</MenuItem>
+                      <MenuItem value={3}>Salgados</MenuItem>
+                    </Select>
+                    </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="imagemtxt"
+            name="imagemtxt"
+            label="String de Imagem"
+            fullWidth
+            autoComplete="imagemtxt"
+            value={imagemtxt}
+            onChange={e => setImagemtxt(e.target.value)}
+          />
+        </Grid>
         <Button variant="contained" color="primary" onClick={handleSubmit}>
         Salvar
         </Button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { mainListItems, secondaryListItems } from './list-menu.admin';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -12,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
+import { logout } from '../../src/auth/autenticacao';
 
 const drawerWidth = 240;
 
@@ -106,6 +107,8 @@ export default function MenuAdmin({title}){
       setOpen(false);
     };
 
+
+
     return (
         <>
         <CssBaseline/> 
@@ -144,4 +147,6 @@ export default function MenuAdmin({title}){
       </Drawer>
         </>
     )
-};
+
+
+  };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -8,8 +9,16 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ListAltIcon from '@material-ui/icons/ListAlt';
+import { logout } from '../../src/auth/autenticacao';
+
+
 
 export const mainListItems = (
+
+
+
+  
+
   <div>
     <ListItem button component="a"  href="/admin" >
       <ListItemIcon>
@@ -39,9 +48,11 @@ export const mainListItems = (
 );
 
 export const secondaryListItems = (
+    
+  
   <div>
     <ListSubheader inset>Configurações</ListSubheader>
-    <ListItem button>
+    <ListItem button> 
       <ListItemIcon>
         <ExitToAppIcon />
       </ListItemIcon>

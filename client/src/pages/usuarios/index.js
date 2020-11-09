@@ -101,10 +101,10 @@ async function handleDelete(id){
           {usuarios.map((row) => (
             <TableRow key={row._id}>
               <TableCell component="th" scope="row">
-                {row.nome_usuario}
+                {row.nome}
               </TableCell>
-              <TableCell align="center">{row.email_usuario}</TableCell>
-              <TableCell align="center">{row.tipo_usuario===1?<Chip label="Administrador"color="primary"/>:<Chip label="Aluno"color="secondary"/>}</TableCell>
+              <TableCell align="center">{row.email}</TableCell>
+              <TableCell align="center">{row.tipo===1?<Chip label="Administrador"color="primary"/>:<Chip label="Aluno"color="secondary"/>}</TableCell>
               <TableCell align="center">{new Date(row.createdAt).toLocaleDateString('pt-br')}</TableCell>
               <TableCell align="right">
               <ButtonGroup aria-label="outlined primary button group">

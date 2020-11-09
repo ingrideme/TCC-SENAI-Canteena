@@ -62,10 +62,10 @@ export default function UsuarioCadastrar() {
   async function handleSubmit(){
 
     const data = {
-      nome_usuario: nome,
-      email_usuario: email,
-      senha_usuario: senha, 
-      tipo_usuario: tipo
+      nome: nome,
+      email: email,
+      senha: senha, 
+      tipo: tipo
     }
 
     if(nome!==''&&email!==''&&senha!==''&&tipo!==''){

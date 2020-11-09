@@ -17,6 +17,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import api from '../../../services/api';
 
+import Chip from '@material-ui/core/Chip';
+
+
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
@@ -91,6 +94,7 @@ async function handleDelete(id){
             <TableCell>Nome</TableCell>
             <TableCell align="center">Preço</TableCell>
             <TableCell align="center">Quantidade</TableCell>
+            <TableCell align="center">Tipo</TableCell>
             <TableCell align="right">Opções</TableCell>
           </TableRow>
         </TableHead>
@@ -102,6 +106,9 @@ async function handleDelete(id){
               </TableCell>
               <TableCell align="center">{row.preco_produto}</TableCell>
               <TableCell align="center">{row.qtd_produto}</TableCell>
+              <TableCell align="center">{(row.tipo_produto===1?<Chip label="Bebidas"color="primary"/>:row.tipo_produto===2?
+              <Chip label="Doces"color="secondary"/>:<Chip label="Salgados"color="error"/>)}
+        </TableCell>
               <TableCell align="right">
               <ButtonGroup aria-label="outlined primary button group">
               <Button color="primary" href={'/admin/produto/editar/'+row._id}>Atualizar</Button>

@@ -86,7 +86,8 @@ export default function ProdutoCadastrar() {
     }
 
     if(nome!==''&&descricao!==''&&preco!==''&&qtd!==''){
-      const response = await api.put('/api/produtos',data);
+      var response = await api.get('/api/produtos.details/'+idProduto);
+
 
       if(response.status===200){
         window.location.href='/admin/produtos'

@@ -1,5 +1,13 @@
 const Usuario = require('../models/usuario.model');
+const jwt = require ('jsonwebtoken')
+const auth = require ('../auth/key.json')
+const bcrypt = require("bcryptjs")
 
+const generateToken = (params = {}) => {
+    return jwt.sign(params, auth.secret, {
+        expiresIn: 86400
+    })
+}
 
 module.exports = {
     async index(req, res){
@@ -7,20 +15,39 @@ module.exports = {
         res.json(user);
     },
     async create(req, res){
-        const {nome_usuario, email_usuario, tipo_usuario,senha_usuario} = req.body;
+        const { email } = req.body;
        
-        let data = {};
-        let user =  await Usuario.findOne({email_usuario});
-
-        if(!user){
-            data = {nome_usuario,email_usuario,tipo_usuario,senha_usuario};
-
-            user = await Usuario.create(data);
-            return res.status(200).json(user);
-        }else{
-            return res.status(500).json(user);
+        if(await Usuario.findOne({ email })) {
+            return res.status(400).send({ error: "Usuário já existe" })
+        }
+        else {
+            const user = await Usuario.create(req.body)
+            return res.status(500).json({
+                user,
+                token: generateToken({ id: user._id })
+            });
         }
     },
+
+    async autenticacao(req, res) {
+        const { email, senha } = req.body
+
+        if(!await Usuario.findOne({ email })) {
+            return res.status(400).send({ error: "Usuário não existe" })
+        }
+        
+        const user = await Usuario.findOne({ email })
+
+        if(!await bcrypt.compare(senha, user.senha)) {
+            return res.status(400).send({ error: "Senha inválida" })
+        }
+
+        return res.send({
+            user,
+            token: generateToken({ id: user._id })
+        })
+    },
+    
     async details(req,res){
         const {_id} = req.params;
         const user = await Usuario.findOne({_id});
