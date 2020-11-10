@@ -6,7 +6,7 @@ const DataSchema = new mongoose.Schema({
     preco_produto: Number, 
     qtd_produto:{type: Number, default:0},
     tipo_produto:{type:Number, default:0},
-    imagem_txt: String
+    imagem_txt: String,
 
 },{
     timestamps:true

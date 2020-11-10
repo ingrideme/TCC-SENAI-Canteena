@@ -11,26 +11,20 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import { logout } from '../../src/auth/autenticacao';
 
-
-
-export const mainListItems = (
-
-
-
-  
-
-  <div>
-    <ListItem button component="a"  href="/admin" >
+export  function MainListItems () {
+  return (
+    <div>
+    <ListItem button component="a" href="/admin" >
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard"/>
+      <ListItemText primary="Dashboard" />
     </ListItem>
     <ListItem button component="a" href="/admin/produtos">
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Produtos"  />
+      <ListItemText primary="Produtos" />
     </ListItem>
     <ListItem button component="a" href="/admin/usuarios">
       <ListItemIcon>
@@ -45,18 +39,27 @@ export const mainListItems = (
       <ListItemText primary="Pedidos" />
     </ListItem>
   </div>
-);
+  )
+} ;
 
-export const secondaryListItems = (
-    
-  
-  <div>
-    <ListSubheader inset>Configurações</ListSubheader>
-    <ListItem button> 
-      <ListItemIcon>
-        <ExitToAppIcon />
-      </ListItemIcon>
-      <ListItemText primary="Sair" />
-    </ListItem>
-     </div>
-);
+function SecondaryListItems () {
+  const history = useHistory(null)
+
+  function handleLogout () {
+    logout()
+    history.push("/")
+  }
+  return (
+    <div>
+      <ListSubheader inset>Configurações</ListSubheader>
+      <ListItem button>
+        <ListItemIcon>
+          <ExitToAppIcon />
+        </ListItemIcon>
+        <ListItemText primary="Sair" onClick={handleLogout}/>
+      </ListItem>
+    </div>
+  )
+}
+
+export default SecondaryListItems

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { mainListItems, secondaryListItems } from './list-menu.admin';
+import SecondaryListItems,{ mainListItems } from './list-menu.admin';
 import List from '@material-ui/core/List';
+import MainListItems from './list-menu.admin';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -107,8 +108,6 @@ export default function MenuAdmin({title}){
       setOpen(false);
     };
 
-
-
     return (
         <>
         <CssBaseline/> 
@@ -141,9 +140,13 @@ export default function MenuAdmin({title}){
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+          <MainListItems />
+        </List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>
+          <SecondaryListItems />
+        </List>
       </Drawer>
         </>
     )

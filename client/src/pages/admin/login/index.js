@@ -46,9 +46,8 @@ export default function SignIn() {
         email, senha
       })
       .then((response) => {
-        const { user, token } = response.data
+        const { token } = response.data
         login(token)
-        localStorage.setItem(user, JSON.stringify(user))
         navigation.push("admin/produtos")
       })
       .catch(err => console.log(err))

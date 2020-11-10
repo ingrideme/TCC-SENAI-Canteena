@@ -23,6 +23,14 @@ module.exports = {
             return res.status(500).json(product);
         }
     },
+
+    async filtroProdutos(req, res) {
+        const { tipo_produto } = req.query
+
+        const produtos = await Produto.findOne({ tipo_produto })
+        return res.json(produtos)
+    },
+
     async details(req,res){
         const {_id} = req.params;
         const product = await Produto.findOne({_id});
