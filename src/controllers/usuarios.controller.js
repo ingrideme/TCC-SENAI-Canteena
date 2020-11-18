@@ -28,7 +28,7 @@ module.exports = {
             });
         }
     },
-
+//tela de login
     async autenticacao(req, res) {
         const { email, senha } = req.body
 

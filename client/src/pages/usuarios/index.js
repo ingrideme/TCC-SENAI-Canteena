@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
  
 }));
 
-
+//mostrar usuarios
 export default function UsuariosListagem() {
   const classes = useStyles();
 
@@ -62,6 +62,7 @@ useEffect(() =>{
   loadUsuarios();
 }, []);
 
+//deletar usuário
 async function handleDelete(id){
   if(window.confirm("Deseja realmente excluir este usuário?")){
     var result = await api.delete('/api/usuarios/'+id);

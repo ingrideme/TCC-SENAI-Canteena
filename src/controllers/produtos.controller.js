@@ -2,49 +2,49 @@ const Produto = require('../models/produto.model');
 
 
 module.exports = {
-    async index(req, res){
+    async index(req, res) {
         const product = await Produto.find();
         res.json(product);
     },
-    async create(req, res){
-        const {nome_produto, descricao_produto, 
+    async create(req, res) {
+        const { nome_produto, descricao_produto,
             preco_produto, qtd_produto, tipo_produto, imagem_txt
         } = req.body;
-       
-        let data = {};
-        let product =  await Produto.findOne({nome_produto});
 
-        if(!product){
-            data = {nome_produto, descricao_produto, preco_produto, qtd_produto, tipo_produto, imagem_txt};
+        let data = {};
+        let product = await Produto.findOne({ nome_produto });
+
+        if (!product) {
+            data = { nome_produto, descricao_produto, preco_produto, qtd_produto, tipo_produto, imagem_txt };
 
             product = await Produto.create(data);
             return res.status(200).json(product);
-        }else{
+        } else {
             return res.status(500).json(product);
         }
     },
 
     async filtroProdutos(req, res) {
         const { tipo_produto } = req.query
-
-        const produtos = await Produto.findOne({ tipo_produto })
+        // find exibe todos, findone só um
+        const produtos = await Produto.find({ tipo_produto })
         return res.json(produtos)
     },
 
-    async details(req,res){
-        const {_id} = req.params;
-        const product = await Produto.findOne({_id});
+    async details(req, res) {
+        const { _id } = req.params;
+        const product = await Produto.findOne({ _id });
         res.json(product);
     },
-    async delete(req, res){
-        const {_id} = req.params;
-        const product = await Produto.findByIdAndDelete({_id});
+    async delete(req, res) {
+        const { _id } = req.params;
+        const product = await Produto.findByIdAndDelete({ _id });
         return res.json(product);
     },
-    async update(req,res){
-        const {_id, nome_produto, descricao_produto, preco_produto, qtd_produto,  tipo_produto, imagem_txt} = req.body;
+    async update(req, res) {
+        const { _id, nome_produto, descricao_produto, preco_produto, qtd_produto, tipo_produto, imagem_txt } = req.body;
         const data = { nome_produto, descricao_produto, preco_produto, qtd_produto, tipo_produto, imagem_txt };
-        const product = await Produto.findOneAndUpdate({_id}, data, {new:true});      
+        const product = await Produto.findOneAndUpdate({ _id }, data, { new: true });
         res.json(product);
     }
 }
