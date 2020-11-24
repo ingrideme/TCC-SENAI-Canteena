@@ -1,51 +1,75 @@
 const Usuario = require('../models/usuario.model');
 const jwt = require ('jsonwebtoken')
-const auth = require ('../auth/key.json')
-const bcrypt = require("bcryptjs")
-
-const generateToken = (params = {}) => {
-    return jwt.sign(params, auth.secret, {
-        expiresIn: 86400
-    })
-}
+const secret = "mysecret";
 
 module.exports = {
     async index(req, res){
         const user = await Usuario.find();
         res.json(user);
     },
-    async create(req, res){
-        const { email } = req.body;
-       
-        if(await Usuario.findOne({ email })) {
-            return res.status(400).send({ error: "Usuário já existe" })
-        }
-        else {
-            const user = await Usuario.create(req.body)
-            return res.status(500).json({
-                user,
-                token: generateToken({ id: user._id })
-            });
+    async create(req,res){
+        const {nome_usuario, email_usuario, tipo_usuario,senha_usuario} = req.body;
+        let data = {};
+        let user =  await Usuario.findOne({email_usuario});
+        
+        if(!user){
+            data = {nome_usuario,email_usuario,tipo_usuario,senha_usuario};
+
+            user = await Usuario.create(data);
+            return res.status(200).json(user);
+        }else{
+            return res.status(500).json(user);
         }
     },
-
-    async autenticacao(req, res) {
-        const { email, senha } = req.body
-
-        if(!await Usuario.findOne({ email })) {
-            return res.status(400).send({ error: "Usuário não existe" })
-        }
-        
-        const user = await Usuario.findOne({ email })
-
-        if(!await bcrypt.compare(senha, user.senha)) {
-            return res.status(400).send({ error: "Senha inválida" })
-        }
-
-        return res.send({
-            user,
-            token: generateToken({ id: user._id })
+    async login(req,res){
+        const { email, senha } = req.body;
+        Usuario.findOne({email_usuario: email, tipo_usuario:1}, function(err,user){
+            if(err){
+                console.log(err);
+                res.status(200).json({erro: "Erro no servidor. Por favor, tente novamente"});
+            }else if (!user){
+                res.status(200).json({status:2, error: 'E-mail não encontrado no banco de dados'});
+            }else{
+                user.isCorrectPassword(senha, async function (err, same){
+                    if(err){
+                        res.status(200).json({error: "Erro no servidor. Por favor, tente novamente"});
+                    }else if(!same){
+                        res.status(200).json({status:2, error: "A senha não confere"});
+                    }else{
+                        const payload = { email };
+                        const token = jwt.sign(payload, secret, {
+                            expiresIn: '24h'
+                        })
+                        res.cookie('token', token, {httpOnly: true});
+                        res.status(200).json({status:1, auth:true, token:token,id_client: user._id,user_name:user.nome_usuario});
+                    }
+                })
+               
+            }
         })
+    },
+    async checkToken(req,res){
+        const token = req.body.token || req.query.token || req.cookies.token || req.headers['x-access-token'];
+        if(!token){
+            res.json({status:401,msg:'Não autorizado: Token inexistente!'});
+        }else{
+            jwt.verify(token, secret, function(err, decoded){
+                if(err){
+                    res.json({status:401,msg:'Não autorizado: Token inválido!'});
+                }else{
+                    res.json({status:200})
+                }
+            })
+        }
+    },
+    async destroyToken(req,res){
+        const token = req.headers.token;
+        if(token){
+            res.cookie('token',null,{httpOnly:true});
+        }else{
+            res.status(401).send("Logout não autorizado!")
+        }
+        res.send("Sessão finalizada com sucesso!");
     },
     
     async details(req,res){

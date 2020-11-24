@@ -111,7 +111,7 @@ async function handleDelete(id){
         </TableCell>
               <TableCell align="right">
               <ButtonGroup aria-label="outlined primary button group">
-              <Button color="primary" href={'/admin/produto/editar/'+row._id}>Atualizar</Button>
+              <Button color="primary" href={'/admin/produtos/editar/'+row._id}>Atualizar</Button>
               <Button color="secondary" onClick={() => handleDelete(row._id)}>Excluir</Button>
               </ButtonGroup> 
               </TableCell>

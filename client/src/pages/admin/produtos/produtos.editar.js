@@ -59,6 +59,8 @@ export default function ProdutoCadastrar() {
   const [preco, setPreco ] = useState('');
   const [descricao, setDescricao ] = useState('');
   const [qtd, setQtd ] = useState('');
+  const [tipo, setTipo ] = useState('');
+  const [imagemtxt, setImagemtxt ] = useState('');
 
   const { idProduto } = useParams();
  
@@ -70,6 +72,8 @@ export default function ProdutoCadastrar() {
       setPreco(response.data.preco_produto);
       setDescricao(response.data.descricao_produto);
       setQtd(response.data.qtd_produto);
+      setImagemtxt(response.data.imagem_txt);
+      setTipo(response.data.tipo_produto);
     }
 
     getProduto();
@@ -79,15 +83,16 @@ export default function ProdutoCadastrar() {
 
     const data = {
       nome_produto: nome,
-      descricao_produto: descricao,
-      preco_produto: preco, 
+      preco_produto: preco,
       qtd_produto: qtd, 
-      _id:idProduto
+      descricao_produto: descricao,
+      tipo_produto: tipo,
+      imagem_txt: imagemtxt,
+      _id: idProduto
     }
 
-    if(nome!==''&&descricao!==''&&preco!==''&&qtd!==''){
-      var response = await api.get('/api/produtos.details/'+idProduto);
-
+    if(nome!==''&&preco!==''&&qtd!==''&&descricao!==''&&tipo!==''&&imagemtxt!==''){
+      const response = await api.put('/api/produtos', data);
 
       if(response.status===200){
         window.location.href='/admin/produtos'
@@ -161,15 +166,44 @@ export default function ProdutoCadastrar() {
             onChange={e => setQtd(e.target.value)}
           />
         </Grid>
+        <Grid xs={12} sm={3}>
+        <FormControl className={classes.formControl}>
+                    <InputLabel id="labelTipo">Tipo</InputLabel>
+                    <Select
+                      labelId="labelTipo"
+                      id="tipo"
+                      value={tipo}
+                      onChange={e => setTipo(e.target.value)}             
+                       >
+                      <MenuItem value={1}>Bebidas</MenuItem>
+                      <MenuItem value={2}>Doces</MenuItem>
+                      <MenuItem value={3}>Salgados</MenuItem>
+                    </Select>
+                    </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="imagemtxt"
+            name="imagemtxt"
+            label="String de Imagem"
+            fullWidth
+            autoComplete="imagemtxt"
+            value={imagemtxt}
+            onChange={e => setImagemtxt(e.target.value)}
+          />
+        </Grid>
         <Grid item xs={12} sm={12}>
         <Button variant="contained" color="primary" onClick={handleSubmit}>
         Salvar
         </Button>
         </Grid>
         </Grid>
-        </Paper>
-            </Grid>
-            
+        </Grid>
+
+</Paper>
+</Grid>           
           </Grid>
           <Box pt={4}>
             <Footer />

@@ -7,56 +7,54 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import ListAltIcon from '@material-ui/icons/ListAlt';
-import { logout } from '../../src/auth/autenticacao';
-
-
+import {getToken, logout} from '../services/auth';
+import api from '../services/api';
 
 export const mainListItems = (
-
-
-
-  
-
   <div>
-    <ListItem button component="a"  href="/admin" >
+    <ListItem button component="a" href="/admin">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard"/>
+      <ListItemText primary="Dashboard" />
     </ListItem>
-    <ListItem button component="a" href="/admin/produtos">
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Produtos"  />
-    </ListItem>
-    <ListItem button component="a" href="/admin/usuarios">
+    <ListItem button component="a" href="/admin/usuarios" >
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Usuários" />
     </ListItem>
-    <ListItem button component="a" href="/admin/usuarios/pedidos">
+    <ListItem button component="a" href="/admin/produtos" >
       <ListItemIcon>
-        <ListAltIcon />
+        <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Pedidos" />
+      <ListItemText primary="Produtos" />
     </ListItem>
   </div>
 );
 
 export const secondaryListItems = (
-    
-  
   <div>
-    <ListSubheader inset>Configurações</ListSubheader>
-    <ListItem button> 
+    <ListSubheader inset>Opções</ListSubheader>
+    <ListItem button onClick={confirmSair}>
       <ListItemIcon>
-        <ExitToAppIcon />
+        <ExitToApp />
       </ListItemIcon>
       <ListItemText primary="Sair" />
     </ListItem>
-     </div>
+  </div>
 );
+
+async function confirmSair(){
+  if(window.confirm("Deseja realmente sair do sistema?")){
+    const response = await api.get("/api/usuarios/destroytoken",{headers:{token: getToken()}});
+    if(response.status===200){
+      logout();
+      window.location.href = '/admin/login'
+    }else{
+      alert("Não foi possível fazer o logout!");
+    }
+  }
+}

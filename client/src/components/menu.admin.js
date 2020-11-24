@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { mainListItems, secondaryListItems } from './list-menu.admin';
 import List from '@material-ui/core/List';
+import MainListItems from './list-menu.admin';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -13,7 +14,9 @@ import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { logout } from '../../src/auth/autenticacao';
+import { getNomeUsuario } from '../services/auth';
+import logoSistema from '../assets/img/logomenu.png';
+
 
 const drawerWidth = 240;
 
@@ -108,45 +111,44 @@ export default function MenuAdmin({title}){
     };
 
 
-
-    return (
-        <>
-        <CssBaseline/> 
-        <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
+    return(
+      <>
+      <CssBaseline />
+      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+          <Toolbar className={classes.toolbar}>
           <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
           >
-            <MenuIcon />
+              <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            {title}
+              {title}
           </Typography>
-        </Toolbar>
+         {getNomeUsuario()} 
+          </Toolbar>
       </AppBar>
-        <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
+      <Drawer
+      variant="permanent"
+      classes={{
+        paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+      }}
+      open={open}
       >
-        <div className={classes.toolbarIcon}>
+          <div className={classes.toolbarIcon}>
+            <img style={{width:160, height:52}} src={logoSistema} alt="Logo Sistema"></img>
           <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
+              <ChevronLeftIcon />
           </IconButton>
-        </div>
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+          </div>
+          <Divider />
+          <List>{mainListItems}</List>
+          <Divider />
+          <List>{secondaryListItems}</List>
       </Drawer>
-        </>
-    )
-
-
-  };
+      </>
+  )
+}
