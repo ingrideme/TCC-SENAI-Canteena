@@ -3,6 +3,7 @@ const routes = express.Router();
 
 const Usuario = require('./controllers/usuarios.controller');
 const Produto = require('./controllers/produtos.controller');
+const Pedido = require('./controllers/pedidos.controller');
 
 
 routes.get('/',Usuario.index);
@@ -17,6 +18,12 @@ routes.delete('/api/usuarios/:_id',Usuario.delete);
 routes.put('/api/usuarios', Usuario.update);
 routes.get('/api/usuarios/checktoken',Usuario.checkToken);
 
+// Rotas de Pedido
+routes.post('/api/pedidos',Pedido.create);
+routes.get('/api/pedidos',Pedido.index);
+routes.get('/api/pedidos.details/:_id', Pedido.details);
+routes.delete('/api/pedidos/:_id',Pedido.delete);
+
 
 // Rotas de Produtos
 routes.post('/api/produtos',Produto.create);
@@ -25,3 +32,4 @@ routes.get('/api/produtos.details/:_id', Produto.details);
 routes.delete('/api/produtos/:_id',Produto.delete);
 routes.put('/api/produtos', Produto.update);
 module.exports = routes;
+
