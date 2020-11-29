@@ -7,16 +7,17 @@ module.exports = {
         res.json(pedidos);
     },
     async create(req, res){
-        const {nome_produto, qtd_produto, preco_produto
+        const {produto_id, usuario_id, qtdselecionado,
         } = req.body;
        
         let data = {};
-        let pedidos =  await Pedido.findOne({nome_produto});
+        let pedidos =  await Pedido.findOne({produto_id});
 
         if(!pedidos){
-            data = {nome_produto, qtd_produto, preco_produto
+            data = {produto_id,
+                usuario_id,
+          qtdselecionado,
             };
-
             pedidos = await Pedido.create(data);
             return res.status(200).json(pedidos);
         }else{

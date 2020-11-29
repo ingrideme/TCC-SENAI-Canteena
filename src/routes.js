@@ -31,5 +31,10 @@ routes.get('/api/produtos',Produto.index);
 routes.get('/api/produtos.details/:_id', Produto.details);
 routes.delete('/api/produtos/:_id',Produto.delete);
 routes.put('/api/produtos', Produto.update);
+routes.get('/api/filtro',Produto.filtroProduto);
+routes.get('/api/filtro/produtos',Produto.produtoSelecionado);
+routes.patch('/api/produtos/:_id',Produto.selecionarProduto);
+
+
 module.exports = routes;
 
