@@ -143,8 +143,9 @@ export default function UsuarioCadastrar() {
                       value={tipo}
                       onChange={e => setTipo(e.target.value)}             
                        >
-                      <MenuItem value={1}>Administrador</MenuItem>
-                      <MenuItem value={2}>Aluno</MenuItem>
+           <MenuItem value={1}>Administrador</MenuItem>
+                      <MenuItem value={2}>Funcionário</MenuItem>
+                      <MenuItem value={3}>Aluno</MenuItem>
                     </Select>
                   </FormControl>
         </Grid>

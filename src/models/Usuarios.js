@@ -1,21 +1,22 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const DataSchema = new mongoose.Schema({
     nome_usuario:String,
-    email_usuario:String,
+    email_usuario:{
+        type: String,
+        unique: true
+    },
     tipo_usuario:{type:Number, default:1},
     senha_usuario:String,
 },{
     timestamps:true
 });
 
-DataSchema.pre('save',function(next){
-    if(!this.isModified("senha_usuario")){
-        return next();
-    }
-    this.senha_usuario = bcrypt.hashSync(this.senha_usuario,10);
-    next();
+DataSchema.pre('save', async function(next){
+    const hash = await bcrypt.hash(this.senha_usuario, 10)
+    this.senha_usuario = hash
+    next()
 });
 
 DataSchema.pre('findOneAndUpdate', function (next){
@@ -35,8 +36,6 @@ DataSchema.methods.isCorrectPassword = function (password, callback ){
         }
     })
 }
-
-
 
 const usuarios = mongoose.model('Usuarios',DataSchema);
 module.exports = usuarios;

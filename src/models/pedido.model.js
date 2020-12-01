@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 
 const DataSchema = new mongoose.Schema({
-    preco_produto: Number, 
-    nome_produto: String,
-    qtd_produto:{type: Number, default:0} ,
-},{
-    timestamps:true
+
+    produto_id : [String],
+    usuario_id : String,
+    qtdselecionado: Number,
+    preco_total: Number,
+
+},
+{
+    timestamps: true
 });
 
 

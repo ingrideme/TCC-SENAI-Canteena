@@ -59,6 +59,9 @@ export default function ProdutoCadastrar() {
   const [descricao, setDescricao ] = useState('');
   const [tipo, setTipo ] = useState('');
   const [imagemtxt, setImagemtxt ] = useState('');
+  const [selecionado] = useState(false);
+  const[qtdselecionada] = useState(0);
+
 
 
   async function handleSubmit(){
@@ -69,7 +72,9 @@ export default function ProdutoCadastrar() {
       qtd_produto: qtd, 
       descricao_produto: descricao,
       tipo_produto: tipo,
-      imagem_txt: imagemtxt
+      imagem_txt: imagemtxt,
+      selecionado: selecionado,
+      quantidade_selecionada : qtdselecionada
     }
 
     if(nome!==''&&preco!==''&&qtd!==''&&descricao!==''&&tipo!==''&&imagemtxt!==''){
@@ -107,6 +112,8 @@ export default function ProdutoCadastrar() {
             autoComplete="nome"
             value={nome}
             onChange={e => setNome(e.target.value)}
+            
+
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -144,6 +151,7 @@ export default function ProdutoCadastrar() {
             onChange={e => setDescricao(e.target.value)}
           />
         </Grid>
+        
         <Grid xs={12} sm={3}>
         <FormControl className={classes.formControl}>
                     <InputLabel id="labelTipo">Tipo</InputLabel>
@@ -172,7 +180,7 @@ export default function ProdutoCadastrar() {
             onChange={e => setImagemtxt(e.target.value)}
           />
         </Grid>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Button variant="contained" color="primary" onClick={handleSubmit}  >
         Salvar
         </Button>
         </Grid>

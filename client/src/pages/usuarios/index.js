@@ -21,6 +21,8 @@ import Chip from '@material-ui/core/Chip';
 
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { getNomeTipo, getNomeTipoLabel } from '../../functions/static_data';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,7 +106,7 @@ async function handleDelete(id){
                 {row.nome_usuario}
               </TableCell>
               <TableCell align="center">{row.email_usuario}</TableCell>
-              <TableCell align="center">{<row className="tipo_usuario"></row>===1?<Chip label="Administrador"color="primary"/>:<Chip label="Aluno"color="secondary"/>}</TableCell>
+              <TableCell align="center"><Chip label={getNomeTipo(row.tipo_usuario)} color={getNomeTipoLabel(row.tipo_usuario)}/></TableCell>
               <TableCell align="center">{new Date(row.createdAt).toLocaleDateString('pt-br')}</TableCell>
               <TableCell align="right">
               <ButtonGroup aria-label="outlined primary button group">

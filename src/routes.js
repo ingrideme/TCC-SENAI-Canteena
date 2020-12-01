@@ -11,6 +11,7 @@ routes.get('/',Usuario.index);
 // Rotas de Usuários
 routes.post('/api/usuarios',Usuario.create);
 routes.post('/api/usuarios/login',Usuario.login);
+routes.post('/api/usuarios/loginmobile',Usuario.loginmobile);
 routes.get('/api/usuarios/destroytoken', Usuario.destroyToken);
 routes.get('/api/usuarios',Usuario.index);
 routes.get('/api/usuarios.details/:_id', Usuario.details);
@@ -31,5 +32,10 @@ routes.get('/api/produtos',Produto.index);
 routes.get('/api/produtos.details/:_id', Produto.details);
 routes.delete('/api/produtos/:_id',Produto.delete);
 routes.put('/api/produtos', Produto.update);
+routes.get('/api/filtro',Produto.filtroProduto);
+routes.get('/api/filtro/produtos',Produto.produtoSelecionado);
+routes.patch('/api/produtos/:_id',Produto.selecionarProduto);
+
+
 module.exports = routes;
 

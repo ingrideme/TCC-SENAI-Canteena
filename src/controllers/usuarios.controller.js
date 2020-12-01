@@ -1,6 +1,8 @@
-const Usuario = require('../models/usuario.model');
+const Usuario = require('../models/Usuarios');
 const jwt = require ('jsonwebtoken')
 const secret = "mysecret";
+const bcrypt = require("bcryptjs")
+const authConfig = require('../auth/key.json');
 
 module.exports = {
     async index(req, res){
@@ -87,5 +89,24 @@ module.exports = {
         const data = { nome_usuario, email_usuario, senha_usuario, tipo_usuario};
         const user = await Usuario.findOneAndUpdate({_id}, data, {new:true});      
         res.json(user);
+    },
+    async loginmobile(req, res) {
+      const { email_usuario, senha_usuario } = req.body
+  
+      const user = await Usuario.findOne({ email_usuario })
+      if(!user) {
+          return res.send({ error: "Usuário não encontrado" })
+      }
+  
+      if(!await bcrypt.compare(senha_usuario, user.senha_usuario)) {
+          return res.send({ error: "Senha inválida" })
+      }
+  
+      const token = jwt.sign({ id: user.id }, authConfig.secret, {
+          expiresIn: 86400
+      })
+  
+      return res.send({ user, token })
     }
+
 }

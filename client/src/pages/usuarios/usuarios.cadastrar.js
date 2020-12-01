@@ -107,6 +107,7 @@ export default function UsuarioCadastrar() {
                     >
                       <MenuItem value={1}>Administrador</MenuItem>
                       <MenuItem value={2}>Funcionário</MenuItem>
+                      <MenuItem value={3}>Aluno</MenuItem>
                     </Select>
                   </FormControl>
                   </Grid>

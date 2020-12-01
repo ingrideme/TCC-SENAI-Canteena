@@ -61,6 +61,9 @@ export default function ProdutoCadastrar() {
   const [qtd, setQtd ] = useState('');
   const [tipo, setTipo ] = useState('');
   const [imagemtxt, setImagemtxt ] = useState('');
+  const[quantidade_selecionada] = useState(0)
+  const[selecionado] = useState(false)
+
 
   const { idProduto } = useParams();
  
@@ -74,6 +77,7 @@ export default function ProdutoCadastrar() {
       setQtd(response.data.qtd_produto);
       setImagemtxt(response.data.imagem_txt);
       setTipo(response.data.tipo_produto);
+
     }
 
     getProduto();
@@ -88,7 +92,9 @@ export default function ProdutoCadastrar() {
       descricao_produto: descricao,
       tipo_produto: tipo,
       imagem_txt: imagemtxt,
-      _id: idProduto
+      _id: idProduto,
+      quantidade_selecionada:quantidade_selecionada,
+      selecionado:selecionado
     }
 
     if(nome!==''&&preco!==''&&qtd!==''&&descricao!==''&&tipo!==''&&imagemtxt!==''){
@@ -166,6 +172,22 @@ export default function ProdutoCadastrar() {
             onChange={e => setQtd(e.target.value)}
           />
         </Grid>
+
+        <Grid item xs={12} sm={3}>
+          <TextField
+            type="qtd"
+            required
+            id="qrd"
+            name="qtd"
+            label="QTd"
+            fullWidth
+            autoComplete="qtd"
+            value={qtd}
+            onChange={e => setQtd(e.target.value)}
+          />
+        </Grid>
+
+
         <Grid xs={12} sm={3}>
         <FormControl className={classes.formControl}>
                     <InputLabel id="labelTipo">Tipo</InputLabel>
