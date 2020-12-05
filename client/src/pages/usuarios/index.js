@@ -86,6 +86,7 @@ async function handleDelete(id){
           <Grid item sm={12}>
           <Paper className={classes.paper}>
             <h2>Listagem de Usuários</h2>
+            <h6>Cadastrar Usuário</h6> 
           <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>
           <TableContainer component={Paper}>

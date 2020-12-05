@@ -1,4 +1,4 @@
-const Usuario = require('../models/Usuarios');
+const Usuario = require('../models/usuario.model');
 const jwt = require ('jsonwebtoken')
 const secret = "mysecret";
 const bcrypt = require("bcryptjs")
@@ -90,6 +90,7 @@ module.exports = {
         const user = await Usuario.findOneAndUpdate({_id}, data, {new:true});      
         res.json(user);
     },
+    
     async loginmobile(req, res) {
       const { email_usuario, senha_usuario } = req.body
   

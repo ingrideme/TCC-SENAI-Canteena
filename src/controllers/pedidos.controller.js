@@ -1,58 +1,42 @@
-const Pedido = require('../models/pedido.model');
-
+const Pedido = require("../models/Pedido");
 
 module.exports = {
-    async index(req, res){
-        const pedidos = await Pedido.find();
-        res.json(pedidos);
-    },
-    async create(req, res){
-        const { produto_id, usuario_id } = req.headers
-        const { qtdselecionado, preco_total } = req.body
-        try {
+  async index(req, res) {
+    const { id } = req.params
+    const pedidos = await Pedido.find({ usuario_id: id });
+    return res.json(pedidos);
+  },
+  async create(req, res) {
+    const { id } = req.params;
+    const { total } = req.body;
+    try {
 
-            const pedido = await Pedido.create({
-                qtdselecionado,
-                produto_id,
-                usuario_id,
-                preco_total
-            })
+      const pedido = await (
+        await Pedido.create({
+          usuario_id: id,
+          total,
+        })
+      )
+        .populate("Produto")
+        .execPopulate();
 
-            if(!pedido) {
-                return res.send({ error: "Faça um pedido" })
-            }
-
-            return res.json(pedido)
-        }
-        catch(err) {
-            return res.send({ error: err.message })
-        }
-        // const {produto_id, usuario_id, qtdselecionado,
-        // } = req.body;
-       
-        // let data = {};
-        // let pedidos =  await Pedido.findOne({produto_id});
-
-        // if(!pedidos){
-        //     data = {produto_id,
-        //         usuario_id,
-        //   qtdselecionado,
-        //     };
-        //     pedidos = await Pedido.create(data);
-        //     return res.status(200).json(pedidos);
-        // }else{
-        //     return res.status(500).json(pedidos);
-        // }
-    },
-    
-    async details(req,res){
-        const {_id} = req.params;
-        const pedidos = await Pedido.findOne({_id});
-        res.json(pedidos);
-    },
-    async delete(req, res){
-        const {_id} = req.params;
-        const pedidos = await Pedido.findByIdAndDelete({_id});
-        return res.json(pedidos);
+      if (!pedido) {
+        return res.status(400).send({ error: "Faça um pedido" });
+      }
+      return res.json(pedido);
+    } catch (err) {
+      return res.send({ error: err.message });
     }
-}
+  },
+
+  async details(req, res) {
+    const { _id } = req.params;
+    const pedidos = await Pedido.findOne({ _id });
+    res.json(pedidos);
+  },
+  async delete(req, res) {
+    const { _id } = req.params;
+    const pedidos = await Pedido.findByIdAndDelete({ _id });
+    return res.json(pedidos);
+  },
+};
