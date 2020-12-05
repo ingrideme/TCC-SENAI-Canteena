@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -18,7 +17,10 @@ import Footer from '../../../components/footer-admin';
 
 import Button from '@material-ui/core/Button';
 
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 import api from '../../../services/api';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +48,8 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     flexDirection: 'column',
   },
+  
+
   
 }));
 
@@ -100,7 +104,9 @@ export default function ProdutoCadastrar() {
         <Grid container spacing={3}>
           <Grid item sm={12}>
           <Paper className={classes.paper}>
-            <h2>Cadastro de Produto</h2>
+            <h2><a href={'/admin/produtos/'} >
+            <ArrowBackIcon> </ArrowBackIcon>Voltar</a></h2>
+            <h1>Cadastro de Produto</h1>
           <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>
           <TextField

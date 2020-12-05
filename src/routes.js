@@ -20,8 +20,8 @@ routes.put('/api/usuarios', Usuario.update);
 routes.get('/api/usuarios/checktoken',Usuario.checkToken);
 
 // Rotas de Pedido
-routes.post('/api/pedidos',Pedido.create);
-routes.get('/api/pedidos',Pedido.index);
+routes.post('/api/pedidos/:id',Pedido.create);
+routes.get('/api/pedidos/:id',Pedido.index);
 routes.get('/api/pedidos.details/:_id', Pedido.details);
 routes.delete('/api/pedidos/:_id',Pedido.delete);
 

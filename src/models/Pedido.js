@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
 
 const DataSchema = new mongoose.Schema({
-
-    produto_id : Number,
-    usuario_id: Number,
+    produto_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Produto"
+    },
+    usuario_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Usuario"
+    },
     qtdselecionado: Number,
+    total: Number
 
 }, {
     timestamps: true
