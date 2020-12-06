@@ -1,21 +1,25 @@
 const mongoose = require('mongoose');
 
 const DataSchema = new mongoose.Schema({
-    produto_id: {
+    produtos: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Produto"
-    },
-    usuario_id: {
+    }],
+    usuario_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Usuario"
-    },
+    }],
+
     qtdselecionado: Number,
-    total: Number
+
+    total: Number,
+
+    // produtos: [String]
 
 }, {
     timestamps: true
 });
 
 
-const pedidos = mongoose.model('Pedidos', DataSchema);
+const pedidos = mongoose.model('Pedido', DataSchema);
 module.exports = pedidos;

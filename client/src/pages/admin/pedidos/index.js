@@ -46,82 +46,85 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     flexDirection: 'column',
   },
- 
+
 }));
 
 
 export default function PedidosListagem() {
   const classes = useStyles();
 
-const [pedidos, setPedidos] = useState([]);
+  const [pedidos, setPedidos] = useState([]);
 
-useEffect(() =>{
-  async function loadPedidos(){
-  const response = await api.get("/api/pedidos")
-  setPedidos(response.data) 
-}
-  loadPedidos();
-}, []);
+  useEffect(() => {
+    async function loadPedidos() {
+      const response = await api.get('/api/pedidos')
+      setPedidos(response.data)
+      const { produtos } = response.data
+      console.log(produtos)
+    }
+    loadPedidos();
+  }, []);
 
-async function handleDelete(id){
-  if(window.confirm("Deseja realmente excluir este pedido?")){
-    var result = await api.delete('/api/pedido/'+id);
-    if(result.status==200){
-      window.location.href = '/admin/pedidos';
-    }else{
-    alert('Ocorreu um erro. Por favor, tente novamente!');
+  async function handleDelete(id) {
+    if (window.confirm("Deseja realmente excluir este pedido?")) {
+      var result = await api.delete('/api/pedido/' + id);
+      if (result.status == 200) {
+        window.location.href = '/admin/pedidos';
+      } else {
+        alert('Ocorreu um erro. Por favor, tente novamente!');
+      }
+    }
   }
-}}
 
 
   return (
     <div className={classes.root}>
-      
-      <MenuAdmin title={'PEDIDOS'}/>
+
+      <MenuAdmin title={'PEDIDOS'} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-          <Grid item sm={12}>
-          <Paper className={classes.paper}>
-            <h2>Listagem de Pedidos</h2>
-          <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
-          <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>ID Pedido</TableCell>
-            <TableCell align="center">Usuário ID</TableCell>
-            <TableCell align="center">Data de Retirada </TableCell>
-            <TableCell align="center">Data de Pedido</TableCell>
-            <TableCell align="right">Opções</TableCell>
-          </TableRow>
-        </TableHead>
-         <TableBody>
-          {pedidos.map((row) => (
-            <TableRow key={row._id}>
-              <TableCell component="th" scope="row">
-                {row.qtdselecionado}
-              </TableCell>
-              <TableCell align="center">{row.usuario_id}</TableCell>
-              <TableCell align="center"> - </TableCell>
-              <TableCell align="center">{new Date(row.createdAt).toLocaleDateString('pt-br')}</TableCell>
-              <TableCell align="right">
-              <ButtonGroup aria-label="outlined primary button group">
-              <Button color="primary" href={'/admin/pedidos.details/'+row._id}>Detalhes</Button>
-              <Button color="secondary" onClick={() => handleDelete(row._id)}>Excluir</Button>
-              </ButtonGroup> 
-              </TableCell>
-              </TableRow>
-          ))}
-        </TableBody> 
-      </Table>
-    </TableContainer>
-          </Grid>
-          </Grid>
-        </Paper>
-          </Grid>
+            <Grid item sm={12}>
+              <Paper className={classes.paper}>
+                <h2>Listagem de Pedidos</h2>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={12}>
+                    <TableContainer component={Paper}>
+                      <TableContainer className={classes.table} aria-label="simple table">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>ID Pedido</TableCell>
+                            <TableCell align="center">Usuário ID</TableCell>
+                            <TableCell align="center">Data de Retirada </TableCell>
+                            <TableCell align="center">Data de Pedido</TableCell>
+                            <TableCell align="right">Opções</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {pedidos.map((row) => (
+                            <TableRow key={row._id}>
+                              <TableCell component="th" scope="row">
+                                {row.qtdselecionado}
+                              </TableCell>
+                              <TableCell align="center">{row.nome_produto}</TableCell>
+                              <TableCell align="center"> - </TableCell>
+                              <TableCell align="center">{new Date(row.createdAt).toLocaleDateString('pt-br')}</TableCell>
+                              <TableCell align="right">
+                                <ButtonGroup aria-label="outlined primary button group">
+                                  <Button color="primary" href={'/admin/pedidos.details/' + row._id}>Detalhes</Button>
+                                  <Button color="secondary" onClick={() => handleDelete(row._id)}>Excluir</Button>
+                                </ButtonGroup>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </TableContainer>
+                    </TableContainer>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
           </Grid>
           <Box pt={4}>
             <Footer />

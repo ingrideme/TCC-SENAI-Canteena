@@ -2,23 +2,24 @@ const Pedido = require("../models/Pedido");
 
 module.exports = {
   async index(req, res) {
+    const pedidos = await Pedido.find().populate("produtos")
+    return res.json(pedidos);
+  },
+  async indexId(req, res) {
     const { id } = req.params
     const pedidos = await Pedido.find({ usuario_id: id });
     return res.json(pedidos);
   },
   async create(req, res) {
     const { id } = req.params;
-    const { total } = req.body;
+    const { total, produtos } = req.body;
     try {
 
-      const pedido = await (
-        await Pedido.create({
-          usuario_id: id,
-          total,
-        })
-      )
-        .populate("Produto")
-        .execPopulate();
+      const pedido = await Pedido.create({
+        usuario_id: id,
+        total,
+        produtos
+      })
 
       if (!pedido) {
         return res.status(400).send({ error: "Faça um pedido" });
