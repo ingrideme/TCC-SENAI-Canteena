@@ -14,5 +14,5 @@ const DataSchema = new mongoose.Schema({
 });
 
 
-const produtos = mongoose.model('Produtos', DataSchema);
+const produtos = mongoose.model('Produto', DataSchema);
 module.exports = produtos;
