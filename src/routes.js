@@ -2,13 +2,13 @@ const express = require('express');
 const routes = express.Router();
 
 const Usuario = require('./controllers/usuarios.controller');
+const UsuarioMobile = require('./controllers/usuariosmobile.controller');
 const Produto = require('./controllers/produtos.controller');
 const Pedido = require('./controllers/pedidos.controller');
 
 // Rotas de Usuários
 routes.post('/api/usuarios',Usuario.create);
 routes.post('/api/usuarios/login',Usuario.login);
-routes.post('/api/usuarios/loginmobile',Usuario.loginmobile);
 routes.get('/api/usuarios/destroytoken', Usuario.destroyToken);
 routes.get('/api/usuarios',Usuario.index);
 routes.get('/api/usuarios.details/:_id', Usuario.details);
@@ -16,14 +16,21 @@ routes.delete('/api/usuarios/:_id',Usuario.delete);
 routes.put('/api/usuarios', Usuario.update);
 routes.get('/api/usuarios/checktoken',Usuario.checkToken);
 
+
+// Rotas de Usuário Mobile
+routes.post('/api/usuariosmobile',UsuarioMobile.create);
+routes.post('/api/usuarios/loginmobile',UsuarioMobile.loginmobile);
+routes.get('/api/usuariosmobile',UsuarioMobile.index);
+routes.get('/api/usuariosmobile.details/:_id', UsuarioMobile.details);
+routes.delete('/api/usuariosmobile/:_id',UsuarioMobile.delete);
+routes.put('/api/usuariosmobile', UsuarioMobile.update);
+
 // Rotas de Pedido
-routes.post('/api/pedidos/:id', Pedido.create);
+routes.post('/api/pedidos/:id',Pedido.create);
 routes.get('/api/pedidos/list',Pedido.index);
-routes.get('/api/pedidos/:id',Pedido.indexId);
-routes.get('/api/pedidos/usuarios/:id',Pedido.userIndex);
+routes.get('/api/pedidos/:id',Pedido.indexById);
 routes.get('/api/pedidos.details/:_id', Pedido.details);
-routes.delete('/api/pedidos/:_id', Pedido.delete);
-routes.patch('/api/pedidos/deleteAll/:_id', Pedido.deleteAll)
+routes.delete('/api/pedidos/:_id',Pedido.delete);
 
 // Rotas de Produtos
 routes.post('/api/produtos',Produto.create);

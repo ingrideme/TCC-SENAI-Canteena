@@ -24,9 +24,14 @@ export const mainListItems = (
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Usuários" />
-      
+      <ListItemText primary="Usuários Admin" />
       </ListItem>
+      <ListItem button component="a" href="/admin/usuariosmobile" >
+      <ListItemIcon>
+        <PeopleIcon />
+      </ListItemIcon>
+      <ListItemText primary="Usuários Mobile" />
+      </ListItem>     
     
         <ListItem button component="a" href="/admin/pedidos" >
     <ListItemIcon>

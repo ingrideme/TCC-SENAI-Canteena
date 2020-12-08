@@ -4,7 +4,7 @@ const Produto = require('../models/Produto');
 module.exports = {
     async index(req, res) {
         const product = await Produto.find();
-        res.json(product);
+        return res.json(product);
     },
     async create(req, res) {
         const { nome_produto, descricao_produto,
@@ -26,17 +26,17 @@ module.exports = {
     async details(req, res) {
         const { _id } = req.params;
         const product = await Produto.findOne({ _id });
-        res.json(product);
+        return res.json(product);
     },
     async filtroProduto(req, res) {
         const { tipo_produto } = req.query;
         const product = await Produto.find({ tipo_produto });
-        res.json(product);
+        return res.json(product);
     },
     async selecionarProduto(req, res) {
         const { _id } = req.params;
         const product = await Produto.findByIdAndUpdate(_id, req.body, { new: true });
-        res.json(product);
+        return res.json(product);
     },
     async produtoSelecionado(req, res) {
         const { selecionado } = req.query;
@@ -53,6 +53,6 @@ module.exports = {
         const { _id, nome_produto, descricao_produto, preco_produto, qtd_produto, tipo_produto, imagem_txt, selecionado,quantidade_selecionada } = req.body;
         const data = { nome_produto, descricao_produto, preco_produto, qtd_produto, tipo_produto, imagem_txt, selecionado,quantidade_selecionada };
         const product = await Produto.findOneAndUpdate({ _id }, data, { new: true });
-        res.json(product);
+        return res.json(product);
     }
 }

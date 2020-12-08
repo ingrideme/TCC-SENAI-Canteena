@@ -2,29 +2,27 @@ const Pedido = require("../models/Pedido");
 
 module.exports = {
   async index(req, res) {
-    const pedidos = await Pedido.find().populate("produtos")
+    const pedidos = await Pedido.find().populate("produtos").populate("usuario_id");
     return res.json(pedidos);
   },
-  async indexId(req, res) {
+  async indexById(req, res) {
     const { id } = req.params
-    const pedidos = await Pedido.findById(id).populate("produtos");
+    const pedidos = await (await Pedido.findById(id).populate("produtos").populate("usuario_id")).execPopulate();
     return res.json(pedidos);
-  },
-  async userIndex(req, res) {
-    const { id } = req.params
-    const usuarios = await Pedido.findById(id).populate("usuarios");
-    console.log(usuarios)
-    return res.json(usuarios);
   },
   async create(req, res) {
     const { id } = req.params;
-    const { total, produtos } = req.body;
+    const { total } = req.body;
     try {
-      const pedido = await Pedido.create({
-        usuarios: id,
-        total,
-        produtos
-      })
+
+      const pedido = await (
+        await Pedido.create({
+          usuario_id: id,
+          total,
+        })
+      )
+        .populate("Produto")
+        .execPopulate();
 
       if (!pedido) {
         return res.status(400).send({ error: "Faça um pedido" });
@@ -44,10 +42,5 @@ module.exports = {
     const { _id } = req.params;
     const pedidos = await Pedido.findByIdAndDelete({ _id });
     return res.json(pedidos);
-  },
-  async deleteAll(req, res) {
-    const { _id } = req.params;
-    const product = await Produto.findByIdAndUpdate(_id, req.body, { new: true });
-    return res.json(product);
   },
 };

@@ -20,6 +20,9 @@ import Login from "./pages/admin/login";
 import PrivateRoute from './services/wAuth';
 import PedidosDetails from "./pages/admin/pedidos/pedidos.details";
 
+import UsuariosMobile from "./pages/admin/usuariosmobile/index";
+import UsuarioMobileEditar from "./pages/admin/usuariosmobile/usuariosmobile.editar";
+
 
 
 export default function Routes() {
@@ -34,19 +37,22 @@ export default function Routes() {
             <Route path="/admin/login" exact component={Login} />
             <PrivateRoute path="/admin" exact component={Dashboard} />
 
-            <Route path="/admin/pedidos" exact component={Pedidos} />
+            <PrivateRoute path="/admin/pedidos" exact component={Pedidos} />
             <PrivateRoute path="/admin/pedidos.details/:idPedido" exact component={PedidosDetails} />
 
 
-            <Route path="/admin/produtos" exact component={Produtos} />
+            <PrivateRoute path="/admin/produtos" exact component={Produtos} />
             <PrivateRoute path="/admin/produtos/cadastrar" exact component={ProdutoCadastrar} />
             <PrivateRoute path="/admin/produtos/editar/:idProduto" exact component={ProdutoEditar} />
 
             <PrivateRoute path="/admin/usuarios" exact component={Usuarios} />
-            <Route path="/admin/usuarios/cadastrar" exact component={UsuarioCadastrar} />
+            <PrivateRoute path="/admin/usuarios/cadastrar" exact component={UsuarioCadastrar} />
             <PrivateRoute path="/admin/usuarios/editar/:idUsuario" exact component={UsuarioEditar} />
+
+            <PrivateRoute path="/admin/usuariosmobile" exact component={UsuariosMobile} />
+            <PrivateRoute path="/admin/usuariosmobile/editar/:idUsuarioMobile" exact component={UsuarioMobileEditar} /> 
 
         </Switch>
     </BrowserRouter>
 )
-}
+        }

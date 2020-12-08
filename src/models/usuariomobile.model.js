@@ -7,8 +7,9 @@ const DataSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    tipo_usuario:{type:Number, default:1},
+    tipo_usuario:{type:Number, default:3},
     senha_usuario:String,
+    saldo_usuario: { type: Number, default: 0 },
 },{
     timestamps:true
 });
@@ -39,5 +40,5 @@ DataSchema.methods.isCorrectPassword = function (password, callback ){
 
 
 
-const usuarios = mongoose.model('Usuarios',DataSchema);
-module.exports = usuarios;
+const usuariosmobile = mongoose.model('UsuarioMobile',DataSchema);
+module.exports = usuariosmobile;

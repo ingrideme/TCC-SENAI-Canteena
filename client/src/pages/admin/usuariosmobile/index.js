@@ -6,8 +6,8 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import MenuAdmin from '../../components/menu.admin';
-import Footer from '../../components/footer-admin';
+import MenuAdmin from '../../../components/menu.admin';
+import Footer from './../../../components/footer-admin';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,13 +15,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import api from '../../services/api';
+import api from '../../../services/api';
 
 import Chip from '@material-ui/core/Chip';
 
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { getNomeTipo, getNomeTipoLabel } from '../../functions/static_data';
+import { getNomeTipo, getNomeTipoLabel } from '../../../functions/static_data';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,21 +54,21 @@ const useStyles = makeStyles((theme) => ({
 export default function UsuariosListagem() {
   const classes = useStyles();
 
-const [usuarios, setUsuarios] = useState([]);
+const [usuariosmobile, setUsuariosMobile] = useState([]);
 
 useEffect(() =>{
-  async function loadUsuarios(){
-  const response = await api.get("/api/usuarios")
-  setUsuarios(response.data) 
+  async function loadUsuariosMobile(){
+  const response = await api.get("/api/usuariosmobile")
+  setUsuariosMobile(response.data) 
 }
-  loadUsuarios();
+  loadUsuariosMobile();
 }, []);
 
 async function handleDelete(id){
   if(window.confirm("Deseja realmente excluir este usuário?")){
-    var result = await api.delete('/api/usuarios/'+id);
+    var result = await api.delete('/api/usuariosmobile/'+id);
     if(result.status==200){
-      window.location.href = '/admin/usuarios';
+      window.location.href = '/admin/usuarios/mobile';
     }else{
     alert('Ocorreu um erro. Por favor, tente novamente!');
   }
@@ -78,17 +78,15 @@ async function handleDelete(id){
   return (
     <div className={classes.root}>
       
-      <MenuAdmin title={'USUARIOS'}/>
+      <MenuAdmin title={'USUARIOS MOBILE'}/>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
           <Grid item sm={12}>
           <Paper className={classes.paper}>
-            <h2>Listagem de Usuários - Admin</h2>
-            <Button href={'/admin/usuarios/cadastrar/'} variant="contained" color="primary">
-            Adicionar novo usuário      </Button>
-          <Grid container spacing={3}>
+            <h2>Listagem de Usuários - Sistema</h2>
+            <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>
           <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -102,7 +100,7 @@ async function handleDelete(id){
           </TableRow>
         </TableHead>
          <TableBody>
-          {usuarios.map((row) => (
+          {usuariosmobile.map((row) => (
             <TableRow key={row._id}>
               <TableCell component="th" scope="row">
                 {row.nome_usuario}
@@ -112,7 +110,7 @@ async function handleDelete(id){
               <TableCell align="center">{new Date(row.createdAt).toLocaleDateString('pt-br')}</TableCell>
               <TableCell align="right">
               <ButtonGroup aria-label="outlined primary button group">
-              <Button color="primary" href={'/admin/usuarios/editar/'+row._id}>Atualizar</Button>
+              <Button color="primary" href={'/admin/usuariosmobile/editar/'+row._id}>Atualizar</Button>
               <Button color="secondary" onClick={() => handleDelete(row._id)}>Excluir</Button>
               </ButtonGroup> 
               </TableCell>
