@@ -57,22 +57,17 @@ export default function PedidosListagem() {
 
   useEffect(() => {
     async function loadPedidos() {
-      const response = await api.get('/api/pedidos')
+      const response = await api.get('/api/pedidos/list')
       setPedidos(response.data)
       const { produtos } = response.data
-      console.log(produtos)
+      console.log(response.data)
     }
     loadPedidos();
   }, []);
 
   async function handleDelete(id) {
     if (window.confirm("Deseja realmente excluir este pedido?")) {
-      var result = await api.delete('/api/pedido/' + id);
-      if (result.status == 200) {
-        window.location.href = '/admin/pedidos';
-      } else {
-        alert('Ocorreu um erro. Por favor, tente novamente!');
-      }
+      api.delete('/api/pedidos/' + id).then(res => console.log(res.data))
     }
   }
 
@@ -96,7 +91,7 @@ export default function PedidosListagem() {
                           <TableRow>
                             <TableCell>ID Pedido</TableCell>
                             <TableCell align="center">Usuário ID</TableCell>
-                            <TableCell align="center">Data de Retirada </TableCell>
+                            <TableCell align="center">Preço Total </TableCell>
                             <TableCell align="center">Data de Pedido</TableCell>
                             <TableCell align="right">Opções</TableCell>
                           </TableRow>
@@ -105,14 +100,14 @@ export default function PedidosListagem() {
                           {pedidos.map((row) => (
                             <TableRow key={row._id}>
                               <TableCell component="th" scope="row">
-                                {row.qtdselecionado}
+                                {row._id}
                               </TableCell>
-                              <TableCell align="center">{row.nome_produto}</TableCell>
-                              <TableCell align="center"> - </TableCell>
+                              <TableCell align="center">{row.usuarios}</TableCell>
+                              <TableCell align="center"> {row.total}</TableCell>
                               <TableCell align="center">{new Date(row.createdAt).toLocaleDateString('pt-br')}</TableCell>
                               <TableCell align="right">
                                 <ButtonGroup aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/pedidos.details/' + row._id}>Detalhes</Button>
+                                  <Button color="primary" href={'/admin/pedidos.details/' +row._id}>Detalhes</Button>
                                   <Button color="secondary" onClick={() => handleDelete(row._id)}>Excluir</Button>
                                 </ButtonGroup>
                               </TableCell>

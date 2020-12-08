@@ -1,6 +1,7 @@
 import React,{useState}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -69,6 +70,8 @@ export default function UsuarioCadastrar() {
           <Grid container spacing={3}>
             <Grid item sm={12}>
               <Paper className={classes.paper}>
+              <h2><a href={'/admin/usuarios/'} >
+            <ArrowBackIcon> </ArrowBackIcon>Voltar</a></h2>
                 <h2>Cadastro de Usuários</h2>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={12}>

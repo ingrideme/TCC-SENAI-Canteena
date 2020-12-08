@@ -5,9 +5,6 @@ const Usuario = require('./controllers/usuarios.controller');
 const Produto = require('./controllers/produtos.controller');
 const Pedido = require('./controllers/pedidos.controller');
 
-
-routes.get('/',Usuario.index);
-
 // Rotas de Usuários
 routes.post('/api/usuarios',Usuario.create);
 routes.post('/api/usuarios/login',Usuario.login);
@@ -20,12 +17,13 @@ routes.put('/api/usuarios', Usuario.update);
 routes.get('/api/usuarios/checktoken',Usuario.checkToken);
 
 // Rotas de Pedido
-routes.post('/api/pedidos/:id',Pedido.create);
-routes.get('/api/pedidos',Pedido.index);
+routes.post('/api/pedidos/:id', Pedido.create);
+routes.get('/api/pedidos/list',Pedido.index);
 routes.get('/api/pedidos/:id',Pedido.indexId);
+routes.get('/api/pedidos/usuarios/:id',Pedido.userIndex);
 routes.get('/api/pedidos.details/:_id', Pedido.details);
-routes.delete('/api/pedidos/:_id',Pedido.delete);
-
+routes.delete('/api/pedidos/:_id', Pedido.delete);
+routes.patch('/api/pedidos/deleteAll/:_id', Pedido.deleteAll)
 
 // Rotas de Produtos
 routes.post('/api/produtos',Produto.create);
@@ -36,7 +34,6 @@ routes.put('/api/produtos', Produto.update);
 routes.get('/api/filtro',Produto.filtroProduto);
 routes.get('/api/filtro/produtos',Produto.produtoSelecionado);
 routes.patch('/api/produtos/:_id',Produto.selecionarProduto);
-
 
 module.exports = routes;
 

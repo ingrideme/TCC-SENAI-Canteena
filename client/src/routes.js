@@ -18,7 +18,7 @@ import ProdutoDetails from "./pages/client/produtos/produtos.details";
 import Pedidos from "./pages/admin/pedidos";
 import Login from "./pages/admin/login";
 import PrivateRoute from './services/wAuth';
-import pedidosDetails from "./pages/admin/pedidos/pedidos.details";
+import PedidosDetails from "./pages/admin/pedidos/pedidos.details";
 
 
 
@@ -35,7 +35,7 @@ export default function Routes() {
             <PrivateRoute path="/admin" exact component={Dashboard} />
 
             <Route path="/admin/pedidos" exact component={Pedidos} />
-            <PrivateRoute path="/admin/pedidos.details/:idPedido" exact component={pedidosDetails} />
+            <PrivateRoute path="/admin/pedidos.details/:idPedido" exact component={PedidosDetails} />
 
 
             <Route path="/admin/produtos" exact component={Produtos} />

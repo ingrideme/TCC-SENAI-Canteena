@@ -9,12 +9,8 @@ const DataSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Usuario"
     }],
-
     qtdselecionado: Number,
-
     total: Number,
-
-    // produtos: [String]
 
 }, {
     timestamps: true

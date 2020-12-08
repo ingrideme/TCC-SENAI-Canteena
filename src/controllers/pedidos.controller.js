@@ -7,16 +7,21 @@ module.exports = {
   },
   async indexId(req, res) {
     const { id } = req.params
-    const pedidos = await Pedido.find({ usuario_id: id });
+    const pedidos = await Pedido.findById(id).populate("produtos");
     return res.json(pedidos);
+  },
+  async userIndex(req, res) {
+    const { id } = req.params
+    const usuarios = await Pedido.findById(id).populate("usuarios");
+    console.log(usuarios)
+    return res.json(usuarios);
   },
   async create(req, res) {
     const { id } = req.params;
     const { total, produtos } = req.body;
     try {
-
       const pedido = await Pedido.create({
-        usuario_id: id,
+        usuarios: id,
         total,
         produtos
       })
@@ -39,5 +44,10 @@ module.exports = {
     const { _id } = req.params;
     const pedidos = await Pedido.findByIdAndDelete({ _id });
     return res.json(pedidos);
+  },
+  async deleteAll(req, res) {
+    const { _id } = req.params;
+    const product = await Produto.findByIdAndUpdate(_id, req.body, { new: true });
+    return res.json(product);
   },
 };
