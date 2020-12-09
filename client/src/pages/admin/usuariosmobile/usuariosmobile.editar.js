@@ -75,25 +75,12 @@ export default function UsuarioMobileEditar() {
   },[])
 
   async function handleSubmit(){
-
-    const data = {
-      nome_usuario: nome,
-      email_usuario: email,
-      saldo_usuario: saldo, 
-      tipo_usuario: tipo, 
-      _id:idUsuarioMobile
-    }
-
-    if(nome!==''&&email!==''&&saldo!==''&&tipo!==''){
-      const response = await api.put('/api/usuariosmobile',data);
-
-      if(response.status===200){
-        window.location.href='/admin/usuariosmobile'
-      }else{
-        alert('Erro a atualizar o usuário!');
-      }
-    }else{
-      alert('Por favor, preencha todos os dados!');
+    if(saldo !== ''){
+      api.patch(`/api/usuariosmobile/${idUsuarioMobile}`,{ saldo_usuario: saldo })
+        .then(res => {
+          window.location.href='/admin/usuariosmobile'
+        })
+        .catch(err => console.log(err))
     }
   }
 

@@ -15,7 +15,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { getNomeUsuario } from '../services/auth';
-import logoSistema from '../assets/img/logomenu.png';
+import logoSistema from '../assets/img/logo.png';
 
 
 const drawerWidth = 240;
@@ -139,7 +139,7 @@ export default function MenuAdmin({title}){
       open={open}
       >
           <div className={classes.toolbarIcon}>
-            <img style={{width:160, height:52}} src={logoSistema} alt="Logo Sistema"></img>
+            <img style={{width:180, height:55}} src={logoSistema} alt="Logo Sistema"></img>
           <IconButton onClick={handleDrawerClose}>
               <ChevronLeftIcon />
           </IconButton>

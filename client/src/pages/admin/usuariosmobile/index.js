@@ -68,7 +68,7 @@ async function handleDelete(id){
   if(window.confirm("Deseja realmente excluir este usuário?")){
     var result = await api.delete('/api/usuariosmobile/'+id);
     if(result.status==200){
-      window.location.href = '/admin/usuarios/mobile';
+      window.location.href = '/admin/usuariosmobile';
     }else{
     alert('Ocorreu um erro. Por favor, tente novamente!');
   }
@@ -96,6 +96,7 @@ async function handleDelete(id){
             <TableCell align="center">Email</TableCell>
             <TableCell align="center">Tipo</TableCell>
             <TableCell align="center">Data de Cadastro</TableCell>
+            <TableCell align="center">Saldo</TableCell>
             <TableCell align="right">Opções</TableCell>
           </TableRow>
         </TableHead>
@@ -108,6 +109,7 @@ async function handleDelete(id){
               <TableCell align="center">{row.email_usuario}</TableCell>
               <TableCell align="center"><Chip label={getNomeTipo(row.tipo_usuario)} color={getNomeTipoLabel(row.tipo_usuario)}/></TableCell>
               <TableCell align="center">{new Date(row.createdAt).toLocaleDateString('pt-br')}</TableCell>
+           <TableCell align="center">{row.saldo_usuario}</TableCell>
               <TableCell align="right">
               <ButtonGroup aria-label="outlined primary button group">
               <Button color="primary" href={'/admin/usuariosmobile/editar/'+row._id}>Atualizar</Button>

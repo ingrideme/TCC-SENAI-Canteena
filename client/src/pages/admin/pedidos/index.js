@@ -54,10 +54,9 @@ export default function PedidosListagem() {
 
   useEffect(() => {
     async function loadPedidos() {
-      const response = await api.get("/api/pedidos/list");
-      setPedidos(response.data);
-      const { produtos } = response.data;
-      console.log(response.data);
+      await api.get("/api/pedidos/list").then(res => {
+        setPedidos(res.data)
+      })
     }
     loadPedidos();
   }, []);
@@ -67,6 +66,10 @@ export default function PedidosListagem() {
       api.delete("/api/pedidos/" + id).then((res) => console.log(res.data));
       window.location.reload()
     }
+  }
+
+  if(!pedidos) {
+    return console.log("Essa porra não pega!!")
   }
 
   return (
@@ -102,7 +105,7 @@ export default function PedidosListagem() {
                                 {row._id}
                               </TableCell>
                               <TableCell align="center">
-                                {row.usuario_id.map(item => item._id)}
+                                {row.usuarios.map(item => item)}
                               </TableCell>
                               <TableCell align="center"> {row.total}</TableCell>
                               <TableCell align="center">

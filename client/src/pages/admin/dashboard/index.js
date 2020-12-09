@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 
 import MenuAdmin from '../../../components/menu.admin';
 
-import Logo from '../../../assets/img/logo.PNG';
+import Logo from '../../../assets/img/logocafe.png';
 
 import Footer from '../../../components/footer-admin';
 
@@ -48,7 +48,9 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
+          <Grid container spacing={3}>   
+          <img style={{width:1000, height:500}} src={Logo} alt="Logo Sistema"></img>
+
 
           </Grid>
           <Box pt={4}>
