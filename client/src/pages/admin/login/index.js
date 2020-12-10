@@ -30,7 +30,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="#">
-        Curso MERN
+        CANTEENA
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -181,8 +181,7 @@ export default function SignIn() {
           </Button>
       </div>
       <Box mt={8}>
-        <Copyright />
-      </Box>
+       </Box>
     </Container>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import api from "../../../../src/services/api";
 import { useParams } from "react-router-dom";
+import stylepedido from './stylepedido.css';
 
 
 import Chip from "@material-ui/core/Chip";
@@ -9,30 +10,30 @@ import Chip from "@material-ui/core/Chip";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  title: {
-    flexGrow: 1,
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     display: "flex",
+//   },
+//   title: {
+//     flexGrow: 1,
+//   },
+//   appBarSpacer: theme.mixins.toolbar,
+//   content: {
+//     flexGrow: 1,
+//     height: "100vh",
+//     overflow: "auto",
+//   },
+//   container: {
+//     paddingTop: theme.spacing(4),
+//     paddingBottom: theme.spacing(4),
+//   },
+//   paper: {
+//     padding: theme.spacing(2),
+//     display: "flex",
+//     overflow: "auto",
+//     flexDirection: "column",
+//   },
+// }));
 
 export default function PedidosDetails() {
   const [pedidos, setPedidos] = useState();
@@ -52,24 +53,21 @@ export default function PedidosDetails() {
   async function handleDelete(idPedido) {
     if (window.confirm("Deseja realmente excluir este pedido?")) {
       api.delete("/api/pedidos/" + idPedido).then((res) => console.log(res.data));
-      window.location.href = '/admin/usuariosmobile';
+      window.location.href = '/admin/pedidos';
     }
   }
 
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <h1>Total do pedido: R${pedidos.total}</h1>
+<div class="quote-container">
+  <i class="pin"></i>
+  <blockquote class="note yellow">
+
+
+  <h1>Total do pedido: R${pedidos.total}</h1>
       {pedidos.usuarios.map((item) => (
         <div key={item._id}>
           <h1>{item.nome_usuario}</h1>
-          <h1>{item.email_usuario}</h1>
         </div>
       ))}
       <div
@@ -78,19 +76,11 @@ export default function PedidosDetails() {
           alignItems: "center",
           justifyContent: "center",
           flexWrap: "wrap",
-          gap: "20px 10px",
+          gap: "10px 10px",
         }}
       >
         {pedidos.produtos.map((item) => (
-          <div
-            style={{
-              width: 200,
-              height: 200,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+          <div class="bordinha"
             key={item._id}
           >
             <img style={{ height: 100 }} src={item.imagem_txt} alt="Imagem" />
@@ -100,14 +90,19 @@ export default function PedidosDetails() {
         ))}
         {console.log(pedidos)}
     </div>
-                <h2>PEDIDO DETALHE</h2>
-                                  <Button
+                                
+         
+
+    <cite class="author">  <Button
                                     color="secondary"
                                     onClick={() => handleDelete(idPedido)}
                                   >
                                     Excluir
-                                  </Button>
-         
-                                  </div>
+                                  </Button></cite>
+  </blockquote>
+</div>
+
+
+                                  
   );
 }
